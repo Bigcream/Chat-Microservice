@@ -1,0 +1,14 @@
+-- create table if not exists public.message
+-- (
+--     id              bigint not null
+--     primary key,
+--     content         varchar(255),
+--     group_id varchar(255),
+--     sender          varchar(255),
+--     time_created    timestamp,
+--     time_seen       timestamp
+--     );
+--
+-- alter table public.message
+--     owner to chatmessage;
+--

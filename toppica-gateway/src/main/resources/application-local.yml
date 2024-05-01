@@ -1,0 +1,71 @@
+server:
+  port: 8080
+  error:
+    include-message: 'always'
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+spring:
+  application:
+    name: gate-way
+#  main:
+#    allow-bean-definition-overriding: 'true'
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+#        add-to-simple-url-handler-mapping: true
+      default-filters:
+        - TokenRelay
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_FIRST
+      routes:
+        - id: chat-service
+          uri: lb://chat-service
+          predicates:
+            - Path=/api/v1/chat/**
+        - id: socket-service
+          uri: lb://socket-service
+          predicates:
+            - Path=/socket/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+  security:
+    oauth2:
+      client:
+        registration:
+          authen-service:
+            provider: keycloak
+            scope: openid
+            authorization-grant-type: authorization_code
+            client-id: authen-service
+            client-secret: tSpBaCNy25VURNb6mJa7RohFzllMDFQj
+            redirect-uri: http://localhost:8080/
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8090/realms/ToppicaMessage
+            #            token-uri: http://localhost:8090/realms/AuthServer/protocol/openid-connect/token
+            authorization-uri: http://localhost:8090/realms/ToppicaMessage/protocol/openid-connect/auth
+            #            user-info-uri: http://localhost:8090/realms/AuthServer/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/ToppicaMessage
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+
+keycloak-url: http://localhost:8090
+toppica-front: http://localhost:5173

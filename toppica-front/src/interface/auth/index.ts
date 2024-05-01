@@ -1,0 +1,5 @@
+export * from '@src/interface/auth/authform.interface'
+export * from '@src/interface/auth/employees.interface'
+export * from '@src/interface/auth/user.interface'
+export * from '@src/interface/auth/token-response.interface'
+export * from '@src/interface/auth/registerform.interface'

@@ -1,0 +1,62 @@
+redis:
+  host: 34.162.185.163
+  port: '6379'
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  kafka:
+#    producer:
+#      value-serializer: org.springframework.kafka.support.serializer.StringOrBytesSerializer
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    consumer:
+#      group-id: microservice
+    bootstrap-servers: 34.162.185.163:9093
+  application:
+    name: chat-service
+  jpa:
+    generate-ddl: 'false'
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: 'false'
+  jdbc:
+    template:
+      query-timeout: '3'
+  datasource:
+    password: chatmessage
+    url: jdbc:postgresql://34.174.212.126:5432/chatmessage
+    hikari:
+      maximum-pool-size: '30'
+      minimum-idle: '10'
+    username: chatmessage
+  flyway:
+    baseline-on-migrate: true
+  data:
+    redis:
+      repositories:
+        enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://34.125.131.166:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+logging:
+  level:
+    org:
+      apache:
+        kafka: warn
+  pattern:
+    console: '%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint}
+      %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan}
+      %clr(line:%L) %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}'
+server:
+  port: 8081
+
+gate-way-url: https://gateway.toppica360.online

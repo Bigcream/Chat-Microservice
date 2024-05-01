@@ -1,0 +1,7 @@
+export * from '@src/interface/chat/conversation.interface'
+export * from '@src/interface/chat/message.interface'
+export * from '@src/interface/chat/recording.interface'
+export * from '@src/interface/chat/attachment.interface'
+export * from '@src/interface/chat/previewData.interface'
+export * from '@src/interface/chat/roomchat.interface'
+export * from '@src/interface/chat/message.request.interface'
